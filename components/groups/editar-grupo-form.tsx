@@ -18,6 +18,8 @@ export default function EditarGrupoForm({ group, onUpdated, onCancel }: EditarGr
   const [name, setName] = useState(group.name)
   const [place, setPlace] = useState(group.place)
   const [description, setDescription] = useState(group.description || "")
+  const [scheduleDate, setScheduleDate] = useState(group.scheduleDate || "")
+  const [scheduleTime, setScheduleTime] = useState(group.scheduleTime || "")
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,7 +28,7 @@ export default function EditarGrupoForm({ group, onUpdated, onCancel }: EditarGr
     const supabase = createClient()
     const { error } = await supabase
       .from("groups")
-      .update({ name, place, description })
+      .update({ name, place, description, scheduleDate, scheduleTime })
       .eq("id", group.id)
     setLoading(false)
     if (error) {
@@ -38,11 +40,37 @@ export default function EditarGrupoForm({ group, onUpdated, onCancel }: EditarGr
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nombre del grupo" required />
-      <Input value={place} onChange={e => setPlace(e.target.value)} placeholder="Lugar" required />
-      <Input value={description} onChange={e => setDescription(e.target.value)} placeholder="Descripción" />
-      <div className="flex gap-2">
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto bg-white p-6 rounded shadow">
+      <h2 className="text-lg font-bold mb-4">Editar grupo</h2>
+      <div>
+        <label className="block text-sm font-medium mb-1">Nombre del grupo</label>
+        <Input value={name} onChange={e => setName(e.target.value)} required />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Lugar</label>
+        <Input value={place} onChange={e => setPlace(e.target.value)} required />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Descripción</label>
+        <Input value={description} onChange={e => setDescription(e.target.value)} />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Día (opcional)</label>
+        <Input
+          type="date"
+          value={scheduleDate}
+          onChange={e => setScheduleDate(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Hora (opcional)</label>
+        <Input
+          type="time"
+          value={scheduleTime}
+          onChange={e => setScheduleTime(e.target.value)}
+        />
+      </div>
+      <div className="flex gap-2 mt-4">
         <Button type="submit" disabled={loading}>{loading ? "Guardando..." : "Guardar cambios"}</Button>
         <Button type="button" variant="outline" onClick={onCancel}>Cancelar</Button>
       </div>
