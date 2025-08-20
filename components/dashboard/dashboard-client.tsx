@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Navbar from "@/components/dashboard/navbar"
 import Sidebar from "@/components/dashboard/sidebar"
 import CrearGrupoForm from "@/components/groups/crear-grupo-form"
@@ -14,6 +14,7 @@ import DetalleDia from "@/components/calendar/detalle-dia"
 import SeccionCumpleanos from "@/components/birthdays/seccion-cumpleanos"
 import ExportarPlanilla from "@/components/export/exportar-planilla"
 import type { Group } from "@/lib/types"
+import { createClient } from "@/lib/supabase/client"
 
 interface DashboardClientProps {
   user: any
@@ -25,6 +26,19 @@ export default function DashboardClient({ user }: DashboardClientProps) {
   const [refreshTrigger, setRefreshTrigger] = useState(0)
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null)
+  const [groups, setGroups] = useState<Group[]>([])
+  const [loadingGroups, setLoadingGroups] = useState(false)
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      setLoadingGroups(true)
+      const supabase = createClient()
+      const { data, error } = await supabase.from("groups").select("*").order("name")
+      if (!error && data) setGroups(data)
+      setLoadingGroups(false)
+    }
+    fetchGroups()
+  }, [refreshTrigger])
 
   const handleGroupCreated = () => {
     setRefreshTrigger((prev) => prev + 1)
@@ -98,7 +112,11 @@ export default function DashboardClient({ user }: DashboardClientProps) {
       case "cumpleanos":
         return <SeccionCumpleanos />
       case "exportar":
-        return <ExportarPlanilla groups={[]} />
+        return loadingGroups ? (
+          <div>Cargando grupos...</div>
+        ) : (
+          <ExportarPlanilla groups={groups} />
+        )
       default:
         return <div>Sección no encontrada</div>
     }
@@ -111,6 +129,3 @@ export default function DashboardClient({ user }: DashboardClientProps) {
         <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
         <main className="flex-1 p-6">{renderContent()}</main>
       </div>
-    </div>
-  )
-}
