@@ -1,4 +1,4 @@
-import ExportarPlanilla from "@/components/exportar-planilla"
+import ExportarPlanilla from "@/components/export"
 import { createClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
 
