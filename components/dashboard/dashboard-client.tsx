@@ -129,3 +129,6 @@ export default function DashboardClient({ user }: DashboardClientProps) {
         <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
         <main className="flex-1 p-6">{renderContent()}</main>
       </div>
+    </div>
+  )
+}
