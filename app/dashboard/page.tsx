@@ -1,6 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { getCurrentUser } from "@/lib/auth"
 import Navbar from "@/components/dashboard/navbar"
 import Sidebar from "@/components/dashboard/sidebar"
 import CrearGrupoForm from "@/components/groups/crear-grupo-form"
@@ -21,6 +23,43 @@ export default function DashboardPage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0)
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { user: currentUser, error } = await getCurrentUser()
+        if (error || !currentUser) {
+          router.push("/auth/login")
+          return
+        }
+        setUser(currentUser)
+      } catch (err) {
+        router.push("/auth/login")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    checkAuth()
+  }, [router])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-2 text-gray-600">Cargando...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return null
+  }
 
   const handleGroupCreated = () => {
     setRefreshTrigger((prev) => prev + 1)

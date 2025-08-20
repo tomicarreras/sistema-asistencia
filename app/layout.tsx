@@ -18,10 +18,6 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co;"
-        />
         <style>{`
 html {
   font-family: ${GeistSans.style.fontFamily};
