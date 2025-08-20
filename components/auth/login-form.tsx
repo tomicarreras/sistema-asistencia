@@ -58,7 +58,15 @@ export default function LoginForm() {
             <label htmlFor="email" className="text-sm font-medium">
               Email
             </label>
-            <Input id="email" name="email" type="email" placeholder="tu@email.com" required disabled={loading} />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="tu@email.com"
+              autoComplete="email"
+              required
+              disabled={loading}
+            />
           </div>
 
           <div className="space-y-2">
@@ -70,6 +78,7 @@ export default function LoginForm() {
               name="password"
               type="password"
               placeholder="Tu contraseña"
+              autoComplete="current-password"
               required
               disabled={loading}
             />

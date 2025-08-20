@@ -6,14 +6,12 @@ export interface AuthUser {
   full_name: string
 }
 
-// Client-side authentication functions
 export const signUp = async (email: string, password: string, fullName: string) => {
   try {
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: window.location.origin,
         data: {
           full_name: fullName,
         },
@@ -22,15 +20,7 @@ export const signUp = async (email: string, password: string, fullName: string) 
 
     if (authError) throw authError
 
-    if (authData.user && !authData.user.email_confirmed_at) {
-      // For development: manually confirm the user
-      const { error: confirmError } = await supabase.auth.admin.updateUserById(authData.user.id, {
-        email_confirm: true,
-      })
-    }
-
     if (authData.user) {
-      // Create teacher record in our custom table
       const { error: teacherError } = await supabase.from("teachers").insert([
         {
           id: authData.user.id,
@@ -57,7 +47,6 @@ export const signIn = async (email: string, password: string) => {
     })
 
     if (error) throw error
-
     return { data, error: null }
   } catch (error: any) {
     return { data: null, error: error.message }
@@ -79,7 +68,6 @@ export const getCurrentUser = async () => {
     if (error) throw error
     if (!user) return { user: null, error: null }
 
-    // Get teacher details from our custom table
     const { data: teacher, error: teacherError } = await supabase
       .from("teachers")
       .select("*")

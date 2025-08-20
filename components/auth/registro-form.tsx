@@ -94,6 +94,7 @@ export default function RegistroForm() {
               name="fullName"
               type="text"
               placeholder="Tu nombre completo"
+              autoComplete="name"
               required
               disabled={loading}
             />
@@ -103,7 +104,15 @@ export default function RegistroForm() {
             <label htmlFor="email" className="text-sm font-medium">
               Email
             </label>
-            <Input id="email" name="email" type="email" placeholder="tu@email.com" required disabled={loading} />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="tu@email.com"
+              autoComplete="email"
+              required
+              disabled={loading}
+            />
           </div>
 
           <div className="space-y-2">
@@ -115,6 +124,7 @@ export default function RegistroForm() {
               name="password"
               type="password"
               placeholder="Mínimo 6 caracteres"
+              autoComplete="new-password"
               required
               disabled={loading}
             />
@@ -129,6 +139,7 @@ export default function RegistroForm() {
               name="confirmPassword"
               type="password"
               placeholder="Repetí tu contraseña"
+              autoComplete="new-password"
               required
               disabled={loading}
             />
