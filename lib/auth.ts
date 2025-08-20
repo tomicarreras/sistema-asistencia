@@ -9,16 +9,25 @@ export interface AuthUser {
 // Client-side authentication functions
 export const signUp = async (email: string, password: string, fullName: string) => {
   try {
-    // First create the auth user
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || window.location.origin,
+        emailRedirectTo: window.location.origin,
+        data: {
+          full_name: fullName,
+        },
       },
     })
 
     if (authError) throw authError
+
+    if (authData.user && !authData.user.email_confirmed_at) {
+      // For development: manually confirm the user
+      const { error: confirmError } = await supabase.auth.admin.updateUserById(authData.user.id, {
+        email_confirm: true,
+      })
+    }
 
     if (authData.user) {
       // Create teacher record in our custom table
