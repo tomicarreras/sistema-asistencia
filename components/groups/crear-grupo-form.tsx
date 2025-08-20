@@ -94,14 +94,14 @@ export default function CrearGrupoForm({ onGroupCreated }: CrearGrupoFormProps) 
               <label htmlFor="name" className="text-sm font-medium">
                 Nombre del Grupo *
               </label>
-              <Input id="name" name="name" placeholder="ej: Matemáticas 1A" required disabled={loading} />
+              <Input id="name" name="name" placeholder="ej: Inglés Beginners" required disabled={loading} />
             </div>
 
             <div className="space-y-2">
               <label htmlFor="place" className="text-sm font-medium">
                 Lugar *
               </label>
-              <Input id="place" name="place" placeholder="ej: Aula 101" required disabled={loading} />
+              <Input id="place" name="place" placeholder="ej: Casa del Bicentenario" required disabled={loading} />
             </div>
           </div>
 
