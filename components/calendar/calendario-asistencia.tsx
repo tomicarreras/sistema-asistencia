@@ -74,15 +74,15 @@ export default function CalendarioAsistencia({ onViewDay }: CalendarioAsistencia
         .from("attendance")
         .select(
           `
-          attendance_date,
+          date,
           present,
           group_id,
           groups!inner(name, teacher_id)
         `,
         )
         .eq("groups.teacher_id", user.id)
-        .gte("attendance_date", startDate)
-        .lte("attendance_date", endDate)
+        .gte("date", startDate)
+        .lte("date", endDate)
 
       if (selectedGroup !== "all") {
         query = query.eq("group_id", selectedGroup)
@@ -96,10 +96,10 @@ export default function CalendarioAsistencia({ onViewDay }: CalendarioAsistencia
       const attendanceMap = new Map<string, AttendanceData>()
 
       data?.forEach((record) => {
-        const key = `${record.attendance_date}-${record.group_id}`
+        const key = `${record.date}-${record.group_id}`
         if (!attendanceMap.has(key)) {
           attendanceMap.set(key, {
-            date: record.attendance_date,
+            date: record.date,
             group_id: record.group_id,
             group_name: (record.groups as any).name,
             total_students: 0,

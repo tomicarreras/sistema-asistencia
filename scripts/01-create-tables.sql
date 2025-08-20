@@ -59,7 +59,7 @@ CREATE INDEX IF NOT EXISTS idx_groups_teacher_id ON groups(teacher_id);
 CREATE INDEX IF NOT EXISTS idx_students_group_id ON students(group_id);
 CREATE INDEX IF NOT EXISTS idx_attendance_student_id ON attendance(student_id);
 CREATE INDEX IF NOT EXISTS idx_attendance_group_id ON attendance(group_id);
-CREATE INDEX IF NOT EXISTS idx_attendance_date ON attendance(date);
+CREATE INDEX IF NOT EXISTS idx_date ON attendance(date);
 CREATE INDEX IF NOT EXISTS idx_students_birth_date ON students(birth_date);
 
 -- Enable Row Level Security

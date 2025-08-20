@@ -35,7 +35,7 @@ export interface Attendance {
   id: string
   student_id: string
   group_id: string
-  attendance_date: string
+  date: string
   present: boolean
   notes?: string
   marked_by: string

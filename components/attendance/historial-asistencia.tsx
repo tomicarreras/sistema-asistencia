@@ -37,13 +37,13 @@ export default function HistorialAsistencia({ group, onBack, onViewDay }: Histor
           .from("attendance")
           .select(
             `
-            attendance_date,
+            date,
             present,
             student:students(id)
           `,
           )
           .eq("group_id", group.id)
-          .order("attendance_date", { ascending: false })
+          .order("date", { ascending: false })
 
         if (error) throw error
 
@@ -51,7 +51,7 @@ export default function HistorialAsistencia({ group, onBack, onViewDay }: Histor
         const summaryMap = new Map<string, AttendanceSummary>()
 
         data?.forEach((record) => {
-          const date = record.attendance_date
+          const date = record.date
           if (!summaryMap.has(date)) {
             summaryMap.set(date, {
               date,

@@ -53,7 +53,7 @@ export default function TomarAsistencia({ group, onBack }: TomarAsistenciaProps)
         .from("attendance")
         .select("*")
         .eq("group_id", group.id)
-        .eq("attendance_date", attendanceDate)
+        .eq("date", attendanceDate)
 
       if (error) throw error
 
@@ -111,13 +111,13 @@ export default function TomarAsistencia({ group, onBack }: TomarAsistenciaProps)
       if (!user) throw new Error("Usuario no autenticado")
 
       // Delete existing attendance for this date and group
-      await supabase.from("attendance").delete().eq("group_id", group.id).eq("attendance_date", attendanceDate)
+      await supabase.from("attendance").delete().eq("group_id", group.id).eq("date", attendanceDate)
 
       // Insert new attendance records
       const attendanceData = attendanceRecords.map((record) => ({
         student_id: record.student.id,
         group_id: group.id,
-        attendance_date: attendanceDate,
+        date: attendanceDate,
         present: record.present,
         notes: record.notes || null,
         marked_by: user.id,

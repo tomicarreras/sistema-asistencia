@@ -52,7 +52,7 @@ export default function DetalleDia({ date, groupId, onBack }: DetalleDiaProps) {
           `,
           )
           .eq("group_id", groupId)
-          .eq("attendance_date", date)
+          .eq("date", date)
           .order("students(full_name)")
 
         if (attendanceError) throw attendanceError
