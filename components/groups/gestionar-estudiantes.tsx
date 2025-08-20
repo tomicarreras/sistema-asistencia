@@ -128,7 +128,7 @@ export default function GestionarEstudiantes({ group, onBack }: GestionarEstudia
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label htmlFor="fullName" className="text-sm font-medium">
-                  Nombre Completo *
+                  Nombre completo *
                 </label>
                 <Input id="fullName" name="fullName" placeholder="Nombre y apellido" required disabled={loading} />
               </div>

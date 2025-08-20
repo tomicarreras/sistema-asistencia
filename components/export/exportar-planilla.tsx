@@ -70,7 +70,7 @@ export default function ExportarPlanilla({ groups }: ExportarPlanillaProps) {
       const dates = [...new Set(attendances.map((a) => a.date))].sort()
 
       // Encabezados
-      let csvContent = "Nombre Completo,Email,DNI"
+      let csvContent = "Nombre completo,Email,DNI"
       dates.forEach((date) => {
         csvContent += `,${format(new Date(date), "dd/MM/yyyy", { locale: es })}`
       })
