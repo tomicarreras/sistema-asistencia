@@ -25,7 +25,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-sm border-b">
-      <div className="w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <img src="/logo.png" alt="Logo del Sistema" className="h-10" />
