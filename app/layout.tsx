@@ -5,12 +5,12 @@ import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Sistema de Asistencia",
+  title: "campusjuventudes - Dirección de Juventudes",
     icons: {
     icon: "/favicon.ico",
   },
   description: "Plataforma de gestión de asistencia para profesores",
-  generator: "v0.app",
+  generator: "tomi",
 }
 
 export default function RootLayout({
