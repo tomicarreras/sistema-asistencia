@@ -6,6 +6,9 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Sistema de Asistencia",
+    icons: {
+    icon: "/favicon.ico",
+  },
   description: "Plataforma de gestión de asistencia para profesores",
   generator: "v0.app",
 }
